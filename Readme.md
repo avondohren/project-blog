@@ -1,4 +1,5 @@
-##Warm up project for Omaha Code School.
+##Project-Blog
+####Warm up project for Omaha Code School.
 
 Goal: Create a blog from scratch using ruby and HTML.
 

@@ -1,0 +1,13 @@
+<h1>Categories</h1>
+
+<h3>Existing Categories</h3>
+<% @cat.each do |cat| %>
+	<p><%= cat.name %></p>
+<% end %>
+
+
+<h3>Add New Category</h3>
+<form method="get" action="/categories">
+	Category Name: <input type="text" name="category">
+	<input type="submit" name="Create">
+</form>

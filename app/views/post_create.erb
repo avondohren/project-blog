@@ -1,3 +1,17 @@
 <h1>Add a New Post</h1>
 
 <h3>Please provide the following details.</h3>
+<form method="post" action="/add/post">
+	Title: <input type="text" name="title"><br />
+	Select Author: <select name="user_id">
+	<% @users.each do |user| %>
+		<option value="<%= user.id %>"><%= user.full_name %></option>
+	<% end %></select><br />
+	Select Category: <select name="category_id">
+	<% @categories.each do |cat| %>
+		<option value="<%= cat.id %>"><%= cat.name %></option>
+	<% end %></select><br />
+	Enter Post:<br />
+	<input type="text" name="content"><br />
+	<input type="submit" value="Post">
+</form>	

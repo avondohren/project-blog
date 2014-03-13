@@ -1,0 +1,5 @@
+<h1><%= @post.title %></h1>
+<h3>Author: <a href="/user/<%= @post.user_id %>"><%= @post.user.full_name %></a></p>
+<p><%= @post.content %></p>
+<h5>Filed under: <%= @post.category.name %></h5>
+<h5>Published on: <%= @post.time %>

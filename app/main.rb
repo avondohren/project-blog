@@ -10,7 +10,7 @@ class Blog < Sinatra::Base
   end
   
   get "/" do
-    @posts = Post.all
+    @posts = Post.last(5).reverse
     erb :home
   end
   
@@ -29,14 +29,31 @@ class Blog < Sinatra::Base
     erb :contactus
   end
   
+  get "/post/create" do
+    @users = User.all
+    @categories = Category.all
+    erb :post_create
+  end
+  
   get "/post/:id" do
     @post = Post.find(params[:id])
     
     erb :post
   end
   
-  get "/post/create" do
-    erb :post_create
+  get "/categories" do
+    new_cat = params[:category] || nil
+    if new_cat
+      if !Category.exists?(:name => new_cat)
+        Category.create({:name => new_cat})
+      else
+        @retval = "#{new_cat} already exists"
+      end
+    end
+    
+    @cat = Category.all
+    
+    erb :category
   end
   
   post "/add/user" do

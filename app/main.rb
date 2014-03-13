@@ -4,6 +4,9 @@ require_relative './controllers/functions'
 
 class Blog < Sinatra::Base
   helpers do
+    def underscore(string)
+      string.split(" ").join("_")
+    end
   end
   
   before do
@@ -23,8 +26,12 @@ class Blog < Sinatra::Base
     erb :blogroll
   end
   
+  get "/page/create" do
+    erb :create_page
+  end
+  
   get "/page/:title" do
-    @page = Page.find_by_title(params[:title])
+    @page = Page.where("clean_title = ?", params[:title]).first
     
     erb :static_page
   end
@@ -36,7 +43,7 @@ class Blog < Sinatra::Base
   get "/post/create" do
     @users = User.all
     @categories = Category.all
-    erb :post_create
+    erb :create_post
   end
   
   get "/post/:id" do
@@ -73,6 +80,16 @@ class Blog < Sinatra::Base
     new_user = User.create({:fname => fname, :lname => lname, :email => email, :username => uid, :password => pw})
     
     redirect to("/user/#{new_user.id}")
+  end
+  
+  post "/add/page" do
+    title = params[:title]
+    clean_title = underscore(title)
+    text = params[:text]
+    
+    new_page = Page.create({:title => title, :clean_title => clean_title, :content => text})
+    
+    redirect to("/page/#{clean_title}")
   end
   
   post "/add/post" do

@@ -31,6 +31,7 @@ ActiveRecord::Schema.define do
           create_table :pages do |table|
                #id - autoincrement integer key is created be default
                table.column :title,       :string
+               table.column :clean_title, :string
                table.column :content,     :text
           end
      end

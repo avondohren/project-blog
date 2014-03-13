@@ -2,4 +2,23 @@
 <h3>Author: <a href="/user/<%= @post.user_id %>"><%= @post.user.full_name %></a></p>
 <p><%= @post.content %></p>
 <h5>Filed under: <%= @post.category.name %></h5>
-<h5>Published on: <%= @post.time %>
+<h5>Published on: <%= @post.time %></h5>
+
+<hr>
+<form method="post" action="/add/comment">
+	<h3>Add Comment</h3>
+	<p>User: <select name="user_id">
+	<% @users.each do |user| %>
+		<option value="<%= user.id %>"><%= user.full_name %></option>
+	<% end %></select><br />
+	<input type="hidden" name="post_id" value="<%= @post.id %>">
+	Comment: <input type="text" name="comment"><br />
+	<input type="submit" name="Comment">
+</form>
+
+<hr>
+<h3>Previous Comments</h3>
+<% @comments.reverse.each do |comment|%>
+	<p>User: <%= comment.user.username %><br />
+	<%= comment.comment %></p>
+<% end %>

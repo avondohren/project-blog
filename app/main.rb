@@ -41,6 +41,9 @@ class Blog < Sinatra::Base
   
   get "/post/:id" do
     @post = Post.find(params[:id])
+    @users = User.all
+    @comments = @post.comments
+    
     
     erb :post
   end
@@ -86,7 +89,7 @@ class Blog < Sinatra::Base
   post "/add/comment" do
     post_id = params[:post_id]
     user_id = params[:user_id]
-    text = params[:text]
+    text = params[:comment]
     
     Comment.create({:comment => text, :user_id => user_id, :post_id => post_id})
     

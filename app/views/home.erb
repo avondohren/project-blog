@@ -1,0 +1,16 @@
+<h1>My Blog</h1>
+<p>Here is my blog. It really doesn't talk about much, but that is kinda the point.</p>
+
+
+<% @posts.first(5) do |post|%>
+	<p><a href="/post/<%= post.id %>"><h3><%= post.title %></h3></a>
+		<strong>Author: <a href="/user/<%= post.user_id.id %>">
+			<%= post.user_id.full_name %>
+		</a></strong><br />
+		<%= post.content.split[0..20].join(' ') %>
+	</p>
+<% end %>
+
+<form method="get" action="/" >
+	<input type="submit" value="Go Home">
+</form>

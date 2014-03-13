@@ -15,7 +15,11 @@ class Blog < Sinatra::Base
   end
   
   get "/blogroll/:category" do
-    @category = Category.find_by_name(params[:name])
+    @category = Category.find_by_name(params[:category])
+    @name = @category.name
+    
+    @posts = Post.where("category_id = ?", @category.id).last(10).reverse
+    
     erb :blogroll
   end
   

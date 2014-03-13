@@ -1,0 +1,14 @@
+<h1>My Blog - <%= @name %></h1>
+
+<h3>Latest Posts</h3>
+<% @posts.each do |post|%>
+	<p><a href="/post/<%= post.id %>"><h3><%= post.title %></h3></a>
+		<strong>Author: <a href="/user/<%= post.user_id %>">
+			<%= post.user.full_name %>
+		</a></strong><br />
+		Posted at: <%= post.time %><br />
+		<%= post.content.split[0..20].join(' ') %>
+	</p>
+<% end %>
+
+<p>Next 10 Results</p>

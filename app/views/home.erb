@@ -2,13 +2,13 @@
 
 <h3>Latest Posts</h3>
 <% @posts.each do |post|%>
-	<p><a href="/post/<%= post.id %>"><h3><%= post.title %></h3></a>
-		<strong>Author: <a href="/user/<%= post.user_id %>">
-			<%= post.user.full_name %>
-		</a></strong><br />
+	<div id="post"><p>
+		<a href="/post/<%= post.id %>"><h3><%= post.title %></h3></a>
+		Author: <a href="/user/<%= post.user_id %>">
+			<%= post.user.full_name %></a><br />
 		Posted at: <%= post.time %><br />
 		<%= post.content.split[0..20].join(' ') %>
-	</p>
+	</p></div>
 <% end %>
 
 <p>Next 5 Results</p>

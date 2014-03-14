@@ -1,14 +1,47 @@
-body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote {
-	margin: 0; padding: 0; border: 0;
-}
-
 body {
-	background-color: lightblue;
+	background-color: #008c8c;
+	background-image: 		url(http://www.transparenttextures.com/patterns/connected.png);
+	width: 800px;
+	margin: 0 auto;
 	font-family: Helvetica, sans-serif; font-size: 18px; line-height: 24px;
 }
 
+#partial-overlay {
+    width: 800px;
+    background: rgba(255, 255, 255, .4);
+}
+
+#title {
+	font-size: 52px;
+	text-align: center;
+	padding-top: 40px;
+}
+  
+div #post {
+	margin: 20px;
+	padding: 15px;
+	background: rgba(0, 0, 0, .9);
+	border-radius: 15px;
+	color: #CCCCCC;
+}
+	
+	div #post a {
+		color: #FFFFFF; 
+		text-decoration: none;
+	}
+
+div #footer {
+	color: #FFFFFF;
+	text-align: center;
+}
+
+	div #footer a {
+		color: #FFFFFF;
+		text-decoration: none;
+	}
+
 nav {
-	margin: 10px auto; 
+	padding: 10px auto; 
 	text-align: center;
 }
 

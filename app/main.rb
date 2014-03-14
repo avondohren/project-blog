@@ -42,6 +42,7 @@ class Blog < Sinatra::Base
   end
   
   post "/contact_us/submit" do
+    # sudo postfix start
     message = "From: Private Person <me@fromdomain.com>
     To: Andy von Dohren <avondohren@gmail.com>
     MIME-Version: 1.0

@@ -21,11 +21,13 @@ class Blog < Sinatra::Base
   end
   
   get "/blogroll/:category" do
-    offset = params[:size] || 0
+    @page = params[:page].to_i || 0
+    offset = (@page * 5)
     @category = Category.find_by_name(params[:category])
     @name = @category.name
     
-    @posts = Post.where("category_id = ?", @category.id).last(10).reverse
+    @count = Post.where("category_id = ?", @category.id).length
+    @posts = Post.where("category_id = ?", @category.id).order('time DESC').offset(offset).first(5)
     
     erb :blogroll
   end

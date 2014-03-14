@@ -17,4 +17,11 @@
 	</div>
 <% end %>
 
-<p>Next 10 Results</p>
+<p>
+	<% if @page != 0 %>
+		<a href="/blogroll/<%= @name %>?page=<%= @page - 1 %>">Previous Page</a>
+	<% end %>
+	<% if @count > ((@page + 1) * 5) %>
+		<a href="/blogroll/<%= @name %>?page=<%= @page + 1 %>">Next Page</a>
+	<% end %>
+</p>

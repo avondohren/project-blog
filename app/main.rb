@@ -14,11 +14,14 @@ class Blog < Sinatra::Base
   end
   
   get "/" do
-    @posts = Post.last(5).reverse
+    @page = params[:page].to_i || 0
+    offset = (@page * 5)
+    @posts = Post.order('time DESC').offset(offset).first(5)
     erb :home
   end
   
   get "/blogroll/:category" do
+    offset = params[:size] || 0
     @category = Category.find_by_name(params[:category])
     @name = @category.name
     

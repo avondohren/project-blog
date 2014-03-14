@@ -7,8 +7,19 @@
 		Author: <a href="/user/<%= post.user_id %>">
 			<%= post.user.full_name %></a><br />
 		Posted at: <%= post.time %><br />
-		<%= post.content.split[0..20].join(' ') %>
+		<% if post.content.split.size > 20 %>
+			<%= post.content.split[0..20].join(' ') %>... <a href="/post/<%= post.id %>">Read More</a>
+		<% else %>
+			<%= post.content %>
+		<% end %>
 	</p></div>
 <% end %>
 
-<p>Next 5 Results</p>
+<p>
+	<% if @page != 0 %>
+		<a href="/?page=<%= @page - 1 %>">Previous Page</a>
+	<% end %>
+	<% if Post.all.length > ((@page + 1) * 5) %>
+		<a href="/?page=<%= @page + 1 %>">Next Page</a>
+	<% end %>
+</p>

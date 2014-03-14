@@ -19,6 +19,8 @@
 <hr>
 <h3>Previous Comments</h3>
 <% @comments.reverse.each do |comment|%>
-	<p>User: <%= comment.user.username %><br />
-	<%= comment.comment %></p>
+	<div id="comment">
+		<p>User: <%= comment.user.username %><br />
+			<%= comment.comment %></p>
+	</div>
 <% end %>

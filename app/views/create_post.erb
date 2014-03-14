@@ -11,7 +11,7 @@
 	<% @categories.each do |cat| %>
 		<option value="<%= cat.id %>"><%= cat.name %></option>
 	<% end %></select><br />
-	Enter Post:<br />
-	<input type="text" name="content"><br />
+	Enter Post:
+	<textarea rows="4" cols="50" name="content"></textarea>
 	<input type="submit" value="Post">
 </form>	

@@ -8,7 +8,11 @@
 			<%= post.user.full_name %>
 		</a></strong><br />
 		Posted at: <%= post.time %><br />
-		<%= post.content.split[0..20].join(' ') %>
+		<% if post.content.split.size > 20 %>
+			<%= post.content.split[0..20].join(' ') %>... <a href="/post/<%= post.id %>">Read More</a>
+		<% else %>
+			<%= post.content %>
+		<% end %>
 	</p>
 	</div>
 <% end %>

@@ -1,0 +1,30 @@
+<html>
+   <head>
+	   <link rel="stylesheet" type="text/css" href="/css/mystyle.css">
+	   <title>My Blog</title>
+   </head>
+   <body>
+	   <h1>My Blog</h1>
+		 <nav>
+		 	<ul>
+		 		<li><a href="/">Home</a></li>
+		 		<li><a href="#">Categories</a>
+		 			<ul>
+						<% Category.all.each do |cat| %>
+		 				<li><a href="/blogroll/<%= cat.name %>"><%= cat.name %></a></li>
+						<% end %>
+		 			</ul>
+		 		</li>
+				<% Page.all.each do |page| %>
+		 		<li><a href="/page/<%= page.clean_title %>"><%= page.title %></a></li>
+				<% end %>
+		 		<li><a href="/contact_us">Contact Us</a></li>
+		 	</ul>
+		 </nav>
+	   <%= yield %>
+		 
+		<div id="footer">
+			<p>
+				<a href="/users">Add User</a> | <a href="/page/create">Add Page</a> | <a href="/post/create">Add Post</a> | <a href="/categories">Add Category</a>
+   </body>
+</html>

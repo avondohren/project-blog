@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'pry'
+require 'net/smtp'
 require_relative './controllers/functions'
 
 class Blog < Sinatra::Base
@@ -36,8 +37,30 @@ class Blog < Sinatra::Base
     erb :static_page
   end
   
-  get "/contactus" do
+  get "/contact_us" do
     erb :contactus
+  end
+  
+  post "/contact_us/submit" do
+    message = "From: Private Person <me@fromdomain.com>
+    To: Andy von Dohren <avondohren@gmail.com>
+    MIME-Version: 1.0
+    Content-type: text/html
+    Subject: SMTP e-mail test
+
+    You have received the following communication from MyBlog:
+    Name: #{params[:name]}
+    Email: #{params[:email]}
+    Comment/Question: #{params[:body]}
+    
+    Thanks!"
+
+    Net::SMTP.start('localhost') do |smtp|
+      smtp.send_message message, 'contactus@myblog.com', 
+                                 'avondohren@gmail.com'
+    end
+    
+    erb :thanks
   end
   
   get "/post/create" do

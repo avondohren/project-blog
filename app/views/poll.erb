@@ -1,0 +1,31 @@
+<h1><%= @poll.question %></h1>
+
+<form method="post" action="/poll/<%= @poll.id %>/vote">
+  <input type="radio" name="ans" value="1"><%= @poll.ans1 %><br />
+  <input type="radio" name="ans" value="2"><%= @poll.ans2 %><br />
+  <input type="radio" name="ans" value="3"><%= @poll.ans3 %><br />
+  <input type="radio" name="ans" value="4"><%= @poll.ans4 %><br />
+	<input type=submit value="Vote">
+</form>
+
+<hr>
+
+<form method="post" action="/add/comment">
+	<h3>Add Comment</h3>
+	<p>User: <select name="user_id">
+	<% @users.each do |user| %>
+		<option value="<%= user.id %>"><%= user.full_name %></option>
+	<% end %></select><br />
+	<input type="hidden" name="poll_id" value="<%= @poll.id %>">
+	Comment: <input type="text" name="comment"><br />
+	<input type="submit" name="Comment">
+</form>
+
+<hr>
+<h3>Previous Comments</h3>
+<% @comments.reverse.each do |comment|%>
+	<div id="comment">
+		<p>User: <%= comment.user.username %><br />
+			<%= comment.comment %></p>
+	</div>
+<% end %>

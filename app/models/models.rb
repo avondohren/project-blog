@@ -3,6 +3,8 @@ ActiveRecord::Base.establish_connection(
      :database => (ENV['RACK_ENV'] == "test") ? "./app/data/blog.test" : "./app/data/blog"
 )
 
+ActiveRecord::Base.logger = Logger.new(STDERR)          #sends logs to terminal
+
 ActiveRecord::Schema.define do
      unless ActiveRecord::Base.connection.tables.include? 'users'
           create_table :users do |table|
@@ -39,9 +41,10 @@ ActiveRecord::Schema.define do
      unless ActiveRecord::Base.connection.tables.include? 'polls'
           create_table :polls do |table|
                #id - autoincrement integer key is created be default
-               table.column :post_id,     :integer
+               table.column :time,        :datetime
                table.column :active,      :boolean
                table.column :question,    :string
+               table.column :user_id,     :integer
                table.column :ans1,        :string
                table.column :ans2,        :string
                table.column :ans3,        :string
@@ -66,12 +69,14 @@ ActiveRecord::Schema.define do
                table.column :comment,     :text
                table.column :user_id,     :integer
                table.column :post_id,     :integer
+               table.column :poll_id,     :integer
           end
      end
 end
 
 class User < ActiveRecord::Base
   has_many :post
+  has_many :poll
   has_many :comment
   
   def full_name
@@ -89,6 +94,8 @@ class Post < ActiveRecord::Base
 end
 
 class Poll < ActiveRecord::Base
+  belongs_to :user
+  has_many :comments
 end
 
 class Category < ActiveRecord::Base
@@ -97,4 +104,5 @@ end
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :post
+  belongs_to :poll
 end

@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'pry'
 require 'net/smtp'
+require 'logger'
 require_relative './controllers/functions'
 
 class Blog < Sinatra::Base
@@ -133,13 +134,20 @@ class Blog < Sinatra::Base
   end
   
   post "/add/comment" do
-    post_id = params[:post_id]
+    post_id = params[:post_id] || nil
+    poll_id = params[:poll_id] || nil
     user_id = params[:user_id]
     text = params[:comment]
     
-    Comment.create({:comment => text, :user_id => user_id, :post_id => post_id})
+    Comment.create({:comment => text, :user_id => user_id, :post_id => post_id, :poll_id => poll_id})
     
-    redirect to("/post/#{post_id}")
+    if post_id
+      redirect to("/post/#{post_id}")
+    elsif poll_id
+      redirect to("/poll/#{poll_id}/result")
+    else
+      redirect to("/")
+    end
   end
   
   get "/users" do
@@ -151,6 +159,68 @@ class Blog < Sinatra::Base
     @user = User.find(params[:id])
     
     erb :user
+  end
+  
+  get "/poll/create" do
+    @users = User.all
+    erb :create_poll
+  end
+  
+  get "/poll/list" do
+    @polls = Poll.all
+    erb :poll_list
+  end
+  
+  post "/add/poll" do
+    user_id = params[:user_id]
+    question = params[:question]
+    ans1 = params[:ans1]
+    ans2 = params[:ans2]
+    ans3 = params[:ans3]
+    ans4 = params[:ans4]
+    time = Time.now
+    
+    new_poll = Poll.create({:time => time, :active => true, :question => question, :user_id => user_id, :ans1 => ans1, :ans2 => ans2, :ans3 => ans3, :ans4 => ans4, :count1 => 0, :count2 => 0, :count3 => 0, :count4 => 0})
+    
+    
+    redirect to("/poll/#{new_poll.id}")
+  end
+  
+  post "/poll/:id/vote" do
+    poll = Poll.find(params[:id])
+    ans = params[:ans].to_i
+    
+    if ans == 1
+      updated = poll.count1 + 1
+      poll.update(:count1 => updated)
+    elsif ans == 2
+      updated = poll.count2 + 1
+      poll.update(:count2 => updated)
+    elsif ans == 3
+      updated = poll.count3 + 1
+      poll.update(:count3 => updated)
+    elsif ans == 4
+      updated = poll.count4 + 1
+      poll.update(:count4 => updated)
+    end 
+    
+    redirect to("/poll/#{poll.id}/result")
+  end
+  
+  get "/poll/:id/result" do
+    @poll = Poll.find(params[:id])
+    @users = User.all
+    @comments = @poll.comments
+    
+    erb :poll_result
+  end
+  
+  get "/poll/:id" do
+    @poll = Poll.find(params[:id])
+    @users = User.all
+    @comments = @poll.comments
+    
+    erb :poll
   end
   
 end

@@ -1,0 +1,51 @@
+<h1><%= @poll.question %></h1>
+<h3>Results</h3>
+
+<table>
+  <tr>
+    <th>Answer</th>
+    <th>Votes</th>
+  </tr>
+  <tr>
+    <td><%= @poll.ans1 %></td>
+    <td><%= @poll.count1.to_i %></td>
+  </tr>
+  <tr>
+    <td><%= @poll.ans2 %></td>
+    <td><%= @poll.count2.to_i %></td>
+  </tr>
+  <tr>
+    <td><%= @poll.ans3 %></td>
+    <td><%= @poll.count3.to_i %></td>
+  </tr>
+  <tr>
+    <td><%= @poll.ans4 %></td>
+    <td><%= @poll.count4.to_i %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @poll.count1.to_i + @poll.count2.to_i + @poll.count3.to_i + @poll.count4.to_i %></td>
+  </tr>
+</table>
+
+<hr>
+
+<form method="post" action="/add/comment">
+	<h3>Add Comment</h3>
+	<p>User: <select name="user_id">
+	<% @users.each do |user| %>
+		<option value="<%= user.id %>"><%= user.full_name %></option>
+	<% end %></select><br />
+	<input type="hidden" name="poll_id" value="<%= @poll.id %>">
+	Comment: <input type="text" name="comment"><br />
+	<input type="submit" name="Comment">
+</form>
+
+<hr>
+<h3>Previous Comments</h3>
+<% @comments.reverse.each do |comment|%>
+	<div id="comment">
+		<p>User: <%= comment.user.username %><br />
+			<%= comment.comment %></p>
+	</div>
+<% end %>

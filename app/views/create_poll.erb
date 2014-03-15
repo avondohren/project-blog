@@ -1,0 +1,16 @@
+<h1>Add a New Poll</h1>
+
+<h3>Please provide the following details.</h3>
+<form method="post" action="/add/poll">
+  Select Author: <select name="user_id">
+  <% @users.each do |user| %>
+  	<option value="<%= user.id %>"><%= user.full_name %></option>
+  <% end %></select><br />
+	Question: <input type="text" name="question"><br />
+  Answer 1: <input type="text" name="ans1"><br />
+  Answer 2: <input type="text" name="ans2"><br />
+  Answer 3: <input type="text" name="ans3"><br />
+  Answer 4: <input type="text" name="ans4"><br />
+  
+	<input type="submit" value="Post Question">
+</form>	
